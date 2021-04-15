@@ -37,7 +37,7 @@
             .then(response=>{
               if(response.status ===200){
                 localStorage.token = response.data.token;
-                this.$router.push('/api/cliente/infocte')
+                this.$router.push('/login/cliente')
               }
             }).catch(err =>{
               this.scope.logout();

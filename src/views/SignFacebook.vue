@@ -13,7 +13,7 @@
             <VFacebookLogin class="btn facebook-btn social-btn"/> <br><br>
             <!--<button class="btn facebook-btn social-btn" type="button"><span><i class="fab fa-facebook-f"></i> Continue with Facebook</span> </button> <br><br>-->
             
-            <router-link id="forgot_pswd" to="/api/cliente/login">Sign up with email</router-link> <br><br><br><br>
+            <router-link id="forgot_pswd" to="/login">Sign up with email</router-link> <br><br><br><br>
         </div>
     </div>
 

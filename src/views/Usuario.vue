@@ -26,7 +26,7 @@
                    </div>
                </div> <br>
 
-               <div class="container">
+               <div class="container" v-if="direccion">
                    <div class="row">
                        <h5> <b>Dirección</b></h5>
                    </div>
@@ -88,17 +88,30 @@
                     </div>
                 </form>
 
+                <!-- ventana en caso de no haber direccion registrada -->
+                <form v-if="direccionno" id="direccionno">
+                    <h3>No olvides registrar tu dirección</h3> <br>
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn bg-primary" type="button" @click="direccionno=false">Ignorar</button>
+                        </div>
+                        <div class="col">
+                            <button class="btn bg-primary" type="button" @click="direccionno=false, ventana_editar=true">Llenar dirección</button>
+                        </div>
+                    </div>
+                </form>
+
                 <!-- Ventana oculta hasta que el usuario hace click en editar -->
                 <form v-if="ventana_editar" id="form_direccion">
                     <h5>Dirección:</h5>
                     <div class="row">
-                        <input type="text" class="second" name="Calle" placeholder="Calle" v-model="calle">
-                        <input type="text" class="second" name="Colonia" placeholder="Colonia" v-model="colonia">
-                        <input type="text" class="second" name="C.P." placeholder="C.P." v-model="cp">
-                        <input type="text" class="second" name="Ciudad" placeholder="Ciudad" v-model="ciudad">
-                        <input type="text" class="second" name="Municipio" placeholder="Municipio" v-model="municipio">
-                        <input type="text" class="second" name="Delegación" placeholder="Delegación" v-model="delegacion">
-                        <input type="text" class="second" name="Estado" placeholder="Estado" v-model="estado">
+                        <input type="text" class="second" name="Calle" placeholder="Calle" v-model="direccion.calle">
+                        <input type="text" class="second" name="Colonia" placeholder="Colonia" v-model="direccion.colonia">
+                        <input type="text" class="second" name="C.P." placeholder="C.P." v-model="direccion.cp">
+                        <input type="text" class="second" name="Ciudad" placeholder="Ciudad" v-model="direccion.ciudad">
+                        <input type="text" class="second" name="Municipio" placeholder="Municipio" v-model="direccion.municipio">
+                        <input type="text" class="second" name="Delegación" placeholder="Delegación" v-model="direccion.delegacion">
+                        <input type="text" class="second" name="Estado" placeholder="Estado" v-model="direccion.estado">
                     </div>
                     <div class="row">
                         <div class="col">
@@ -146,14 +159,7 @@ export default {
             ventana_telefono:false,
             ventana_editar:false,
             contraseña:null,
-
-            calle:null,
-            colonia:null,
-            ciudad:null,
-            cp:null,
-            municipio:null,
-            delegacion:null,
-            estado:null
+            direccionno:false,
       }
   },
   methods: {
@@ -177,26 +183,38 @@ export default {
           }
       },
       modificar(){
-          axios.put('http://fundacionenebro.org.mx:3001/monitor/api/direccion/cliente/edit',
-          {calle:this.calle,colonia:this.colonia,cp:this.cp,ciudad:this.ciudad, municipio:this.municipio,delegacion:this.delegacion,estado:this.estado}
+          axios.post('http://fundacionenebro.org.mx:3001/monitor/api/direccion/cliente/edit',
+          {calle:this.direccion.calle,colonia:this.direccion.colonia,cp:this.direccion.cp,ciudad:this.direccion.ciudad, municipio:this.direccion.municipio,delegacion:this.direccion.delegacion,estado:this.direccion.estado}
           )
           .then(response =>{
               response;
               this.ventana_editar = false;
+              
+          }).catch(error =>{
+              console.log("error: ",error)
+              if(error.response.status == 400){
+                  alert("ha ocurrido un error")
+              }
           })
+      },
+      llenado(){
+          this.direccionno = true;
       }
   },
   mounted () {
     axios.post('http://fundacionenebro.org.mx:3001/monitor/api/cliente/infocte')
     .then(response =>{
       if(response.data.status === 1){
-          console.log(response.data.cliente[0].info_direccion)
-          this.direccion = response.data.cliente[0].info_direccion
+          if(response.data.cliente[0].info_direccion == null){
+              this.llenado();
+          }else{
+              this.direccion = response.data.cliente[0].info_direccion
+          }
           this.datos = response.data.cliente[0];
       }
 
     }).catch(error =>{
-        console.log(error)
+        console.log(error.response)
     })
   }
 }
@@ -235,14 +253,26 @@ body {
      box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.4);
 }
 
-#form_direccion {
+#direccionno {
     background: rgb(219, 218, 218);
     padding: 40px;
-    top: 22%;
+    top: 40%;
     position:absolute;
     left: 0;
     width:100%;
-    height: 52%;
+    height: 30%;
+    -webkit-box-shadow: 0 4px 5px 0 rgba(5, 5, 5, 0.4);
+     box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.4);
+}
+
+#form_direccion {
+    background: rgb(219, 218, 218);
+    padding: 40px;
+    top: 15%;
+    position:absolute;
+    left: 0;
+    width:100%;
+    height: 68%;
     -webkit-box-shadow: 0 4px 5px 0 rgba(5, 5, 5, 0.4);
      box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.4);
 }

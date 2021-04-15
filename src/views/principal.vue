@@ -69,7 +69,10 @@ export default {
           this.direccion = response.data.cliente[0].info_direccion
           this.datos = response.data.cliente[0];
       }
-
+    }).catch(error =>{
+      if(error.response.status === 500){
+        this.$router.push('/signfacebook')
+      }
     })
   }
 }
