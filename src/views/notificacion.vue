@@ -74,14 +74,14 @@ export default {
         },
         change_input(id, leida) {
             if (leida === 0) {
-                axios.put("http://fundacionenebro.org.mx:3001/monitor/api/configuracion/notificacion/leida",{id_notificacion: id})
+                axios.post("http://fundacionenebro.org.mx:3001/monitor/api/configuracion/notificacion/leida",{id_notificacion: id})
                 .then(not => {
                     if(not.status === 200) {
                         this.actualizar_lista_not();
                     }
                 })
             } else {
-                axios.put("http://fundacionenebro.org.mx:3001/monitor/api/configuracion/notificacion/noleida",{id_notificacion: id})
+                axios.post("http://fundacionenebro.org.mx:3001/monitor/api/configuracion/notificacion/noleida",{id_notificacion: id})
                 .then(not =>{
                     if(not.status === 200) {
                         this.actualizar_lista_not();
@@ -90,7 +90,7 @@ export default {
             }
         },
         marcar_leidos() {
-        axios.put("http://fundacionenebro.org.mx:3001/monitor/api/configuracion/notificacion/todoleido",).then(not=>{
+        axios.post("http://fundacionenebro.org.mx:3001/monitor/api/configuracion/notificacion/todoleido",).then(not=>{
             if(not.status===200){
                 this.actualizar_lista_not();
             }

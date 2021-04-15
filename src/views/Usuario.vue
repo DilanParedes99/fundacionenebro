@@ -160,7 +160,7 @@ export default {
 
       modificaTelefono(){
           if(this.telefono != null){
-              axios.put('http://fundacionenebro.org.mx:3001/monitor/api/cliente/edit/telefono',{telefono:this.telefono})
+              axios.post('http://fundacionenebro.org.mx:3001/monitor/api/cliente/edit/telefono',{telefono:this.telefono})
               .then(response =>{
                   response
                   this.ventana_telefono=false;
@@ -169,7 +169,7 @@ export default {
       },
       editar(){
           if(this.contraseña != null){
-              axios.put('http://fundacionenebro.org.mx:3001/monitor/api/cliente/edit/pass',{password:this.contraseña})
+              axios.post('http://fundacionenebro.org.mx:3001/monitor/api/cliente/edit/pass',{password:this.contraseña})
               .then(response =>{
                   response;
                 this.ventana=false;

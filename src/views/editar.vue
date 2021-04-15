@@ -166,7 +166,7 @@ export default {
     guardar(){
       if(this.f_fabricacion != null){
         this.f_fabricacion = this.f_fabricacion + " " + this.hora + ":00"
-        axios.put('http://fundacionenebro.org.mx:3001/monitor/api/medidor/edit/fabricacion',
+        axios.post('http://fundacionenebro.org.mx:3001/monitor/api/medidor/edit/fabricacion',
           {id_medidor:this.id,fabricacion:this.f_fabricacion})
           .then(response =>{
               response;
@@ -180,7 +180,7 @@ export default {
           this.id_uso=2
         }
 
-        axios.put('http://fundacionenebro.org.mx:3001/monitor/api/medidor/edit/tipouso',
+        axios.post('http://fundacionenebro.org.mx:3001/monitor/api/medidor/edit/tipouso',
           {id_medidor:this.id,id_uso:this.id_uso})
           .then(response =>{
               response;
@@ -188,7 +188,7 @@ export default {
 
       }
 
-      axios.put('http://fundacionenebro.org.mx:3001/monitor/api/medidor/edit/direccion',
+      axios.post('http://fundacionenebro.org.mx:3001/monitor/api/medidor/edit/direccion',
           {id_medidor:this.id,calle:this.direccion.calle,colonia:this.direccion.colonia,cp:this.direccion.cp,ciudad:this.direccion.ciudad, municipio:this.direccion.municipio,delegacion:this.direccion.delegacion,estado:this.direccion.estado}
           )
           .then(response =>{

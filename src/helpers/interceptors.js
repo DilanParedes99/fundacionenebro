@@ -25,7 +25,7 @@ export var interceptors_axios={
                 //borrar user de storage y redireccionar a login
                // store.commit('auth/logout'); //llamar a funcion para eliminar token y datos de usuario que se encuentra en auth/mutations
                 localStorage.clear();
-                router.push("/"); //ruta donde se inicia sesion
+                router.push("/login"); //ruta donde se inicia sesion
             }
             return Promise.reject(error);
           });
