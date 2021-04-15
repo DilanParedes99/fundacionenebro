@@ -42,7 +42,7 @@
             }).catch(err =>{
               this.scope.logout();
               localStorage.clear();
-              console.log(err);
+              console.log("error",err);
             })
           }
         }else{
@@ -51,7 +51,7 @@
       },
 
       logout(){
-
+          localStorage.clear();
       },
 
       init(fb,scoped){

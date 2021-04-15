@@ -10,7 +10,7 @@
                 </div>
 
                 <!-- Login Form -->
-                <form v-on:submit.prevent="login">
+                <form v-on:submit.prevent="login" v-on:click:submit="login">
                     <input type="email" id="email" class="second" name="email" placeholder="email" required v-model="email">
                     <input type="password" id="password" class="third" name="password" placeholder="password" required v-model="password"> <br><br>
                     <div class="container" v-if="datos_invalidos">

@@ -26,7 +26,7 @@
                    </div>
                </div> <br>
 
-               <div class="container" v-if="direccion">
+               <div class="container" v-if="existenciadireccion">
                    <div class="row">
                        <h5> <b>Dirección</b></h5>
                    </div>
@@ -160,6 +160,7 @@ export default {
             ventana_editar:false,
             contraseña:null,
             direccionno:false,
+            existenciadireccion:false,
       }
   },
   methods: {
@@ -170,6 +171,7 @@ export default {
               .then(response =>{
                   response
                   this.ventana_telefono=false;
+                  this.inicio()
               })
           }
       },
@@ -189,6 +191,7 @@ export default {
           .then(response =>{
               response;
               this.ventana_editar = false;
+              this.inicio()
               
           }).catch(error =>{
               console.log("error: ",error)
@@ -199,23 +202,28 @@ export default {
       },
       llenado(){
           this.direccionno = true;
+      },
+      inicio(){
+          axios.post('http://fundacionenebro.org.mx:3001/monitor/api/cliente/infocte')
+            .then(response =>{
+            if(response.data.status === 1){
+                if(response.data.cliente[0].info_direccion == null){
+                    console.log(response.data.cliente[0].info_direccion)
+                    this.llenado();
+                }else{
+                    this.direccion = response.data.cliente[0].info_direccion
+                    this.existenciadireccion = true
+                }
+                this.datos = response.data.cliente[0];
+            }
+
+            }).catch(error =>{
+                console.log(error.response)
+            })
       }
   },
   mounted () {
-    axios.post('http://fundacionenebro.org.mx:3001/monitor/api/cliente/infocte')
-    .then(response =>{
-      if(response.data.status === 1){
-          if(response.data.cliente[0].info_direccion == null){
-              this.llenado();
-          }else{
-              this.direccion = response.data.cliente[0].info_direccion
-          }
-          this.datos = response.data.cliente[0];
-      }
-
-    }).catch(error =>{
-        console.log(error.response)
-    })
+    this.inicio()
   }
 }
 </script>
