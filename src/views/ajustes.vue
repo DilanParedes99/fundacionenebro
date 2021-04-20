@@ -90,7 +90,7 @@
                         </div>
                 </div>
                   <!-- footer-->
-                <footer id="formFooter" style="position:absolute; right:-30px; left:250px; top:550px;">
+                <footer id="formFooter" >
                     <div class="row">
                         <div class="col">
                             <router-link to="/login/cliente"><img src="@/images/regresar.png" id="icon_sm"></router-link>

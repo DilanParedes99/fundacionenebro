@@ -60,7 +60,7 @@
                 <form v-if="ventana_telefono" id="form_password">
                     <h5>Telefono:</h5>
                     <div class="row">
-                        <input type="text" class="second" name="Contraseña" placeholder="Nuevo telefono" required v-model="telefono">
+                        <input type="number" class="second" name="Contraseña" placeholder="Nuevo telefono" required v-model="telefono">
                     </div>
                     <div class="row">
                         <div class="col">
