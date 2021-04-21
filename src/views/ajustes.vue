@@ -30,8 +30,9 @@
                           <label style="position:relative; left:-10%;">
                               Niveles Bajos de Gas
                           </label>    
-                            <h6 ><b>% Min. de capacidad</b> {{datos.capminima}}%</h6>                       
-                            <input type="range" v-model="datos.capminima">
+                            <h6 ><b>% Min. de capacidad</b> {{datos.capminima}}%</h6>  
+                            <!--NO llama la funcion -->                    
+                            <input type="range" v-model="datos.capminima" @click="capacidadGas()" >
                         </div>
                             <br>
 
@@ -44,8 +45,8 @@
                             <h6 ><b>Temperatura </b> {{datos.temperatura}}°  </h6>
                             <input type="range" v-model="datos.temperatura" @click="activatemperatura()"> 
                                              
-                          </div>
-                        <br>
+                            </div>
+                          <br>
                         <!-- recarga de gas-->
                         <div class="form-check" v-if="datos.activa" style="position:relative; left:-52px; top:-18px;">
                           <input class="form-check-input" type="checkbox" v-model="datos.recarga" @click="activarrecarga(datos.recarga)">
@@ -55,42 +56,10 @@
                         </div>
 
                     <br>
-                    <!-- notificaciones varias-->
-                        <div  style="position:relative; left:-40px; top:-30px;">
-                          <div class="form-check" v-if="datos.activa">
-                            <input class="form-check-input" type="checkbox" v-model="ActivarVarias">
-                            <label style="position:relative;">
-                                Notificaciones Varias
-                            </label>                            
-                          </div>
-                  <br>
-                          <div v-if="activa">
-                            <div class="form-check" v-if="ActivarVarias" style="position:relative; left:30px; top:-15px;">
-                              <input class="form-check-input" type="checkbox" v-model="ActivarDatos">
-                              <label>
-                                Recepción de Datos
-                              </label>              
-                            </div>
-
-                            <div class="form-check" v-if="ActivarVarias" style="position:relative; left:30px; top:-15px;">
-                              <input class="form-check-input" type="checkbox" v-model="ActivarMal">
-                              <label>
-                                Mal Funcionamiento
-                              </label>      
-                            </div>                        
-
-
-                            <div class="form-check" v-if="ActivarVarias" style="position:relative; left:5px; top:-15px;">
-                              <input class="form-check-input" type="checkbox" v-model="ActivarPromociones">
-                              <label>
-                                Promociones
-                              </label>                           
-                            </div>
-                          </div>
-                        </div>
                 </div>
-                  <!-- footer-->
-                <footer id="formFooter" >
+                
+                <!-- footer-->
+                <footer id="formFooter">
                     <div class="row">
                         <div class="col">
                             <router-link to="/login/cliente"><img src="@/images/regresar.png" id="icon_sm"></router-link>
@@ -207,9 +176,9 @@ export default {
         }
       },
       activarnivel(datos){
-        this.datos.capminima = Number(this.datos.capminima)
         if(datos != 0 || datos != false){
           datos=0;
+          this.datos.capminima = 0;
           axios.post('http://fundacionenebro.org.mx:3001/monitor/api/configuracion/gas',{nivelgas:datos,capminima:this.datos.capminima})
           .then(response =>{
           response;
@@ -217,17 +186,31 @@ export default {
         })
         }else{
           datos=1;
+          this.datos.capminima = 1;
            axios.post('http://fundacionenebro.org.mx:3001/monitor/api/configuracion/gas',{nivelgas:datos,capminima:this.datos.capminima})
           .then(response =>{
           response;
           this.datos.nivelgas = datos;
         })
         }
+      },
+      capacidadGas(){
+        this.datos.capminima = Number(this.datos.capminima)
+        this.datos.nivelgas = 1;
+        if(this.datos.capminima !=0){
+          axios.post('http://fundacionenebro.org.mx:3001/monitor/api/configuracion/gas',{nivelgas:this.datos.nivelgas,capminima:this.datos.capminima})
+          .then(response =>{
+            response;
+        })
+        }else{
+          this.activarnivel(this.datos.nivelgas)
+        }
       }
     } ,     
     mounted() {
       axios.get('http://fundacionenebro.org.mx:3001/monitor/api/configuracion')
       .then(response =>{
+        console.log(response.data)
         this.datos= response.data.configuracion
       })
 }        
