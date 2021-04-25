@@ -57,7 +57,7 @@ export default {
     }
         },     
   mounted(){
-      axios.get('http://fundacionenebro.org.mx:3001/monitor/api/medidor/cliente/autenticado')
+      axios.get('https://fundacionenebro.org.mx/monitorapi/monitor/api/medidor/cliente/autenticado')
       .then(response =>{
         this.datos = response.data.listamedidor;
       })

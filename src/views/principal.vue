@@ -63,7 +63,7 @@ export default {
     }
   },
   mounted () {
-    axios.post('http://fundacionenebro.org.mx:3001/monitor/api/cliente/infocte')
+    axios.post('https://fundacionenebro.org.mx/monitorapi/monitor/api/cliente/infocte')
     .then(response =>{
       if(response.data.status === 1){
           this.direccion = response.data.cliente[0].info_direccion

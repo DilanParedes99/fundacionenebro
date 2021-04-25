@@ -14,13 +14,30 @@
                       <h3><b>No.Serie</b></h3>  
                     </div>  
                     <h5>{{datos.serie}}</h5>
-                     <br><br><br>
+                     <br>
+                    <div class="row" v-if="info !== undefined && info !== null">
+                      <h5><b>Fecha de la ultima lectura:</b> {{info.Timestamp | moment("L")}}</h5>
+                    </div>
                     <div class="row">
                       <h5><b>Teléfono / Chip :</b>&nbsp;</h5> <h5 style="margin-left:10%"><i class="fas fa-mobile-alt"></i>&nbsp;{{datos.chip}}</h5>
                     </div>
-                    <div class="row">
-                      <h5><b>Batería</b></h5> <h5 style="margin-left:10%"><i class="fas fa-battery-full"></i>{{info.Bat}}%</h5>
+                    <div class="row"  v-if="info !== undefined && info !== null">
+                      <h5><b>Batería</b></h5> <h5><i class="fas fa-battery-full mr-1 ml-2 "></i> {{info.Bat}}%</h5>
                     </div>
+                    <div class="row" v-if="datos.capacidad_tanque">
+                    <h5 v-if="datos.capacidad_tanque==='a'"><b>Capacidad del tanque: </b>&nbsp; 100 litros</h5> 
+                    <h5 v-if="datos.capacidad_tanque==='b'"><b>Capacidad del tanque: </b>&nbsp; 120 litros</h5> 
+                    <h5 v-if="datos.capacidad_tanque==='c'"><b>Capacidad del tanque: </b>&nbsp; 180 litros</h5> 
+                    <h5 v-if="datos.capacidad_tanque==='d'"><b>Capacidad del tanque: </b>&nbsp; 300 litros</h5> 
+                    <h5 v-if="datos.capacidad_tanque==='e'"><b>Capacidad del tanque: </b>&nbsp; 500 litros</h5> 
+                    <h5 v-if="datos.capacidad_tanque==='f'"><b>Capacidad del tanque: </b>&nbsp; 1000 litros</h5>
+                    <h5 v-if="datos.capacidad_tanque==='g'"><b>Capacidad del tanque: </b>&nbsp; 1600 litros</h5>
+                    <h5 v-if="datos.capacidad_tanque==='h'"><b>Capacidad del tanque: </b>&nbsp; 2200 litros</h5>
+                    <h5 v-if="datos.capacidad_tanque==='i'"><b>Capacidad del tanque: </b>&nbsp; 2800 litros</h5>
+                    <h5 v-if="datos.capacidad_tanque==='j'"><b>Capacidad del tanque: </b>&nbsp; 3400 litros</h5>  
+                    <h5 v-if="datos.capacidad_tanque==='k'"><b>Capacidad del tanque: </b>&nbsp; 5000 litros</h5>
+                    <h5 v-if="datos.capacidad_tanque==='l'"><b>Capacidad del tanque: </b>&nbsp; No elegido</h5>     
+                  </div>
                  </div>
                  
                 <div class="container">
@@ -30,12 +47,17 @@
                   <div class="row">
                     <div class="col-3"></div>
                     <div class="col-9">
-                      <h5><i class="fas fa-thermometer-three-quarters fa-2x"></i>&nbsp;{{info.Temp}}°</h5>
-                      </div>
+                      <h5  v-if="info !== undefined && info !== null"><i class="fas fa-thermometer-three-quarters fa-2x"></i>&nbsp;{{info.Temp}}°</h5>
+                      <h5  v-else><i class="fas fa-thermometer-three-quarters fa-2x"></i>&nbsp;°</h5>
+                    </div>
                   </div>
                 </div>
 
-                <div id="tanque" >
+               <div class="container">
+                 <div class="row">
+                    <div id="tanque" >
+                 </div>
+               </div>
                     
                 </div> <br> <br>
 
@@ -53,7 +75,8 @@
 
                 <div class="container">
                   <div class="row">
-                    <h5 ><b>Fecha de Fabricación</b></h5>
+                    <h5 ><b>Fecha de Fabricación: </b></h5>
+                    <p> {{this.datos.fecha_fabricacion_tanque_formateada}}</p>
                   </div>
                   <div class="row">
                       <div class="col">
@@ -98,7 +121,7 @@
                     <div class="row">
                         <div class="col">
                             <img src="@/images/guardar.png" id="icon_sm" @click="guardar()"><br>
-                            <h2 @click="guardar()">Guardar</h2>
+                            <h2 class="btn" @click="guardar()">Guardar</h2>
                         </div>
                         <div class="col">
                             <router-link to="/consumo"> <img src="@/images/consumo.png" id="icon_sm" @click="consumo(id)"> </router-link> <br>
@@ -166,7 +189,7 @@ export default {
     guardar(){
       if(this.f_fabricacion != null){
         this.f_fabricacion = this.f_fabricacion + " " + this.hora + ":00"
-        axios.post('http://fundacionenebro.org.mx:3001/monitor/api/medidor/edit/fabricacion',
+        axios.post('https://fundacionenebro.org.mx/monitorapi/monitor/api/medidor/edit/fabricacion',
           {id_medidor:this.id,fabricacion:this.f_fabricacion})
           .then(response =>{
               response;
@@ -180,7 +203,7 @@ export default {
           this.id_uso=2
         }
 
-        axios.post('http://fundacionenebro.org.mx:3001/monitor/api/medidor/edit/tipouso',
+        axios.post('https://fundacionenebro.org.mx/monitorapi/monitor/api/medidor/edit/tipouso',
           {id_medidor:this.id,id_uso:this.id_uso})
           .then(response =>{
               response;
@@ -188,7 +211,7 @@ export default {
 
       }
 
-      axios.post('http://fundacionenebro.org.mx:3001/monitor/api/medidor/edit/direccion',
+      axios.post('https://fundacionenebro.org.mx/monitorapi/monitor/api/medidor/edit/direccion',
           {id_medidor:this.id,calle:this.direccion.calle,colonia:this.direccion.colonia,cp:this.direccion.cp,ciudad:this.direccion.ciudad, municipio:this.direccion.municipio,delegacion:this.direccion.delegacion,estado:this.direccion.estado}
           )
           .then(response =>{
@@ -200,7 +223,7 @@ export default {
            
   mounted(){
     console.log(this.id)
-    axios.post('http://fundacionenebro.org.mx:3001/monitor/api/medidor/info',{id_medidor:this.id})
+    axios.post('https://fundacionenebro.org.mx/monitorapi/monitor/api/medidor/info',{id_medidor:this.id})
     .then(response =>{
         this.datos = response.data.medidor
         this.info = response.data.medidor.info_Actual
@@ -210,7 +233,7 @@ export default {
         
     })
 
-    axios.get('http://fundacionenebro.org.mx:3001/monitor/api/medidor/info/usos')
+    axios.get('https://fundacionenebro.org.mx/monitorapi/monitor/api/medidor/info/usos')
       .then(response=>{
         this.listausos=response.data.listausos
       })

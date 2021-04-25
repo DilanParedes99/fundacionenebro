@@ -87,6 +87,7 @@
 <script>
 // @ is an alias to /src
 import axios from 'axios';
+import swal from "sweetalert";
 export default {
   name: 'Medidores',
   components: {
@@ -116,11 +117,13 @@ export default {
       
       this.f_fabricacion = this.f_fabricacion + " " + this.hora + ":00";
 
-      axios.post('http://fundacionenebro.org.mx:3001/monitor/api/medidor/',
+      axios.post('https://fundacionenebro.org.mx/monitorapi/monitor/api/medidor/',
       {numserie:this.numserie,id_uso:this.id_uso,f_fabricacion:this.f_fabricacion, calle:this.calle, 
       colonia:this.colonia, cp:this.cp, ciudad:this.ciudad, municipio:this.municipio, delegacion:this.delegacion, estado:this.estado})
       .then(response =>{
-        response
+        if(response.status===200){
+          this.$router.push({name:'Medidores'});
+        }
       }).catch(err =>{
         if(err.response.status === 409){
           this.datos_invalidos= true;
@@ -128,11 +131,15 @@ export default {
         if(err.response.status === 500){
           this.datos_invalidos= true;
         }
+        if(err.response.status === 400){
+          this.datos_invalidos= true;
+          swal("Agregar medidor",""+err.response.data.message,"error");
+        }
       })
     }
   },
   mounted(){
-      axios.get('http://fundacionenebro.org.mx:3001/monitor/api/medidor/info/usos')
+      axios.get('https://fundacionenebro.org.mx/monitorapi/monitor/api/medidor/info/usos')
       .then(response=>{
         this.listausos=response.data.listausos
       })

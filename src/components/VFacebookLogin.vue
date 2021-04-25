@@ -33,7 +33,7 @@
             this.login_social.id_user = response.authResponse.userID;
             this.login_social.access_token = response.authResponse.accessToken;
 
-            axios.post('http://fundacionenebro.org.mx:3001/monitor/api/cliente/loginfb',{id_user:this.login_social.id_user,access_token:this.login_social.access_token})
+            axios.post('https://fundacionenebro.org.mx/monitorapi/monitor/api/cliente/loginfb',{id_user:this.login_social.id_user,access_token:this.login_social.access_token})
             .then(response=>{
               if(response.status ===200){
                 localStorage.token = response.data.token;

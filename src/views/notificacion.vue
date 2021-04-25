@@ -65,7 +65,7 @@ export default {
     },
     methods: {
         actualizar_lista_not(){
-            axios.post('http://fundacionenebro.org.mx:3001/monitor/api/cliente/obtener/notificaciones')
+            axios.post('https://fundacionenebro.org.mx/monitorapi/monitor/api/cliente/obtener/notificaciones')
         .then(response=>{
             if (response.status === 200) {
             this.listadata = response.data.notificaciones;
@@ -74,14 +74,14 @@ export default {
         },
         change_input(id, leida) {
             if (leida === 0) {
-                axios.post("http://fundacionenebro.org.mx:3001/monitor/api/configuracion/notificacion/leida",{id_notificacion: id})
+                axios.post("https://fundacionenebro.org.mx/monitorapi/monitor/api/configuracion/notificacion/leida",{id_notificacion: id})
                 .then(not => {
                     if(not.status === 200) {
                         this.actualizar_lista_not();
                     }
                 })
             } else {
-                axios.post("http://fundacionenebro.org.mx:3001/monitor/api/configuracion/notificacion/noleida",{id_notificacion: id})
+                axios.post("https://fundacionenebro.org.mx/monitorapi/monitor/api/configuracion/notificacion/noleida",{id_notificacion: id})
                 .then(not =>{
                     if(not.status === 200) {
                         this.actualizar_lista_not();
@@ -90,7 +90,7 @@ export default {
             }
         },
         marcar_leidos() {
-        axios.post("http://fundacionenebro.org.mx:3001/monitor/api/configuracion/notificacion/todoleido",).then(not=>{
+        axios.post("https://fundacionenebro.org.mx/monitorapi/monitor/api/configuracion/notificacion/todoleido",).then(not=>{
             if(not.status===200){
                 this.actualizar_lista_not();
             }
@@ -115,7 +115,10 @@ ul .notificacion{
     }    
 ul .notificacion i{
     font-size: x-large;
-    }    
+}
+.noleido{
+    background-color: #d4f1ff;
+}    
 
 html {
   background-color: #56baed;
