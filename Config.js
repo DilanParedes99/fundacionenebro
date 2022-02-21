@@ -1,4 +1,5 @@
 require('dotenv').config();
+
 export var  Config = {
-    url:"https://fundacionenebro.org.mx/monitorapi/monitor"
+    url:process.env.VUE_APP_URL_API
 }

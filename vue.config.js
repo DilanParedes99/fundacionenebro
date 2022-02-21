@@ -4,6 +4,6 @@ module.exports = {
       ? '/monitorweb/'
       : '/monitorweb/',
     devServer: { 
-        proxy: "https://fundacionenebro.org.mx/monitorapi/monitor"
+        proxy: process.env.VUE_APP_URL_API
     }
 }
