@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row mt-3">
-      <div class="offset-1 col-md-10 p-1">
+      <div class="offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-2 col-lg-8 p-1">
         <h1>Configuración</h1>
         <form class="form-configuraciones p-2">
           <div class="form-row">
@@ -109,7 +109,7 @@
 
 <script>
 import axios from "axios";
-
+import { Config } from "../../Config";
 export default {
   name: "App",
   data() {
@@ -133,7 +133,7 @@ export default {
       if (this.datos.activa == 0) {
         axios
           .post(
-            "https://fundacionenebro.org.mx/monitorapi/monitor/api/configuracion/activar"
+            Config.url+"/api/configuracion/activar"
           )
           .then((response) => {
             response;
@@ -142,7 +142,7 @@ export default {
       } else {
         axios
           .post(
-            "https://fundacionenebro.org.mx/monitorapi/monitor/api/configuracion/desactivar"
+            Config.url+"/api/configuracion/desactivar"
           )
           .then((response) => {
             response;
@@ -154,7 +154,7 @@ export default {
       this.datos.bateria = Number(this.datos.bateria);
       axios
         .post(
-          "https://fundacionenebro.org.mx/monitorapi/monitor/api/configuracion/bateria",
+          Config.url+"/api/configuracion/bateria",
           { bateria: this.datos.bateria }
         )
         .then((response) => {
@@ -166,7 +166,7 @@ export default {
       this.datos.temperatura = Number(this.datos.temperatura);
       axios
         .post(
-          "https://fundacionenebro.org.mx/monitorapi/monitor/api/configuracion/temperatura",
+          Config.url+"/api/configuracion/temperatura",
           { temperatura: this.datos.temperatura }
         )
         .then((response) => {
@@ -179,7 +179,7 @@ export default {
         datos = 0;
         axios
           .post(
-            "https://fundacionenebro.org.mx/monitorapi/monitor/api/configuracion/bateria",
+            Config.url+"/api/configuracion/bateria",
             { bateria: datos }
           )
           .then((response) => {
@@ -191,7 +191,7 @@ export default {
         datos = 1;
         axios
           .post(
-            "https://fundacionenebro.org.mx/monitorapi/monitor/api/configuracion/bateria",
+            Config.url+"/api/configuracion/bateria",
             { bateria: datos }
           )
           .then((response) => {
@@ -206,7 +206,7 @@ export default {
         datos = 0;
         axios
           .post(
-            "https://fundacionenebro.org.mx/monitorapi/monitor/api/configuracion/temperatura",
+            Config.url+"/api/configuracion/temperatura",
             { temperatura: datos }
           )
           .then((response) => {
@@ -218,7 +218,7 @@ export default {
         datos = 1;
         axios
           .post(
-            "https://fundacionenebro.org.mx/monitorapi/monitor/api/configuracion/temperatura",
+            Config.url+"/api/configuracion/temperatura",
             { temperatura: datos }
           )
           .then((response) => {
@@ -233,7 +233,7 @@ export default {
         datos = 0;
         axios
           .post(
-            "https://fundacionenebro.org.mx/monitorapi/monitor/api/configuracion/recarga",
+            Config.url+"/api/configuracion/recarga",
             { recarga: datos }
           )
           .then((response) => {
@@ -245,7 +245,7 @@ export default {
         datos = 1;
         axios
           .post(
-            "https://fundacionenebro.org.mx/monitorapi/monitor/api/configuracion/recarga",
+            Config.url+"/api/configuracion/recarga",
             { recarga: datos }
           )
           .then((response) => {
@@ -259,7 +259,7 @@ export default {
       if(this.datos.compartir===true){
         axios
           .post(
-            "https://fundacionenebro.org.mx/monitorapi/monitor/api/configuracion/compartirdatos",
+            Config.url+"/api/configuracion/compartirdatos",
             { compartir: 1 }
           )
           .then((response) => {
@@ -270,7 +270,7 @@ export default {
       }else{
          axios
           .post(
-            "https://fundacionenebro.org.mx/monitorapi/monitor/api/configuracion/compartirdatos",
+            Config.url+"/api/configuracion/compartirdatos",
             { compartir: 0 }
           )
           .then((response) => {
@@ -287,7 +287,7 @@ export default {
         this.datos.capminima=0;
         axios
           .post(
-            "https://fundacionenebro.org.mx/monitorapi/monitor/api/configuracion/gas",
+            Config.url+"/api/configuracion/gas",
             { nivelgas: datos, capminima: this.datos.capminima }
           )
           .then((response) => {
@@ -302,7 +302,7 @@ export default {
         }
         axios
           .post(
-            "https://fundacionenebro.org.mx/monitorapi/monitor/api/configuracion/gas",
+            Config.url+"/api/configuracion/gas",
             { nivelgas: datos, capminima: this.datos.capminima }
           )
           .then((response) => {
@@ -315,7 +315,7 @@ export default {
     actualizar_info_configuracion() {
       axios
         .get(
-          "https://fundacionenebro.org.mx/monitorapi/monitor/api/configuracion"
+          Config.url+"/api/configuracion"
         )
         .then((response) => {
           if (response.status === 200) {
@@ -338,7 +338,7 @@ export default {
   mounted() {
     axios
       .get(
-        "https://fundacionenebro.org.mx/monitorapi/monitor/api/configuracion"
+        Config.url+"/api/configuracion"
       )
       .then((response) => {
         if (response.status === 200) {

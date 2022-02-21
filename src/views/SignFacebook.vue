@@ -4,12 +4,12 @@
 
           <!-- Icon -->
         <div class="fadeIn first">
-          <img src="../images/monitor.png" id="icon" alt="User Icon" />
+          <img src="../images/monitor.png" id="icon"  class="img-fluid" alt="User Icon" />
         </div>
 
-        <div class="social-login">
-            <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Sign up</h1>
-        <p style="text-align:center"> Create a free account to join the Acme community!  </p> <br><br>
+        <div class="social-login mt-5">
+            <h1 class="h3 mb-3 font-weight-normal mt-5" style="text-align: center"> Sign up</h1>
+        <p  style="text-align:center"> Create a free account to join the Acme community!  </p> <br><br>
             <VFacebookLogin class="btn facebook-btn social-btn"/> <br><br>
             <!--<button class="btn facebook-btn social-btn" type="button"><span><i class="fab fa-facebook-f"></i> Continue with Facebook</span> </button> <br><br>-->
             
@@ -36,7 +36,7 @@ export default {
 <style scoped>
 #icon {
   width:80%;
-  transform: translateY(-50%);
+  
 }
 /* sign in FORM */
 #logreg-forms{

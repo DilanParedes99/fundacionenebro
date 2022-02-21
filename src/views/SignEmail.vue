@@ -1,17 +1,18 @@
 <template>
-  <div class="home">
-    <div class="wrapper">
-      <div id="formContent">
-        <!-- Tabs Titles -->
-
-        <!-- Icon -->
-        <div class="first">
-          <h3>Sign in with email</h3>
-          <br /><br /><br />
+  <div class="container">
+    <div class="row">
+      <!-- Icon -->
+        <div class="offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-2 col-lg-8 first mt-5 mb-2">
+          <h3 class="mt-3">Sign in with email</h3>
         </div>
+    </div>
+    <div class="row">
+      <div class="offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-2 col-lg-8">
+        <!-- Tabs Titles -->
 
         <!-- Login Form -->
         <form v-on:submit.prevent="login" v-on:click:submit="login">
+          <div class="form-group">
           <input
             type="email"
             id="email"
@@ -37,26 +38,29 @@
               <br />
             </div>
           </div>
-          <input type="submit" class="fourth" value="Sign In" /> <br />
+          <button class="btn fourth"><p class="mt-1 mb-1">Sign In</p></button> <br />
+          </div>
         </form>
-
-        <button class="btn email-btn social-btn" type="button">
+      </div>
+    </div>
+    <div class="row">
+        <div class="offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-2 col-lg-8">
+          <button class="btn email-btn social-btn mt-1 mb-1" type="button">
           <router-link to="/createaccount">Need an account? </router-link>
         </button>
         <!-- Remind Passowrd -->
-        <div id="formFooter">
-          <VFacebookLogin class="btn facebook-btn social-btn" /> <br /><br />
+       
+          <VFacebookLogin class="btn facebook-btn social-btn mb-1 mt-1" />
           <!--<button class="btn facebook-btn social-btn" type="button"><span><i class="fab fa-facebook-f"></i> Continue with Facebook</span> </button> <br><br>-->
-          <button class="btn google-btn social-btn" type="button">
+          <button class="btn mb-1 mt-1 google-btn social-btn" type="button">
             <span
               ><i class="fab fa-twitter-square fa-2x"></i> Continue with
               Twitter</span
             >
           </button>
-          <br /><br />
         </div>
+        
       </div>
-    </div>
   </div>
 </template>
 
@@ -65,6 +69,7 @@
 import axios from "axios";
 import VFacebookLogin from "@/components/VFacebookLogin.vue";
 import swal from "sweetalert";
+import { Config } from "../../Config";
 export default {
   name: "SignEmail",
   components: {
@@ -81,7 +86,7 @@ export default {
     login() {
       axios
         .post(
-          "https://fundacionenebro.org.mx/monitorapi/monitor/api/cliente/login",
+          Config.url+"/api/cliente/login",
           { email: this.email, password: this.password }
         )
         .then((response) => {
@@ -131,7 +136,7 @@ body {
 .social-btn {
   font-weight: 100;
   color: white;
-  width: 85%;
+  width: 90%;
   font-size: 0.9rem;
 }
 
@@ -146,12 +151,14 @@ body {
 }
 
 .facebook-btn {
+  margin-left: 5%;
   background-color: #3c589c;
-  margin-left: 30px;
+  width: 90%;
 }
 
 .google-btn {
   background-color: #00acee;
+  width: 90%;
 }
 
 a {
@@ -220,18 +227,15 @@ h2.active {
 
 /* FORM TYPOGRAPHY*/
 
-input[type="button"],
-input[type="submit"],
-input[type="reset"] {
+.fourth {
   background-color: #e01a1a;
   border: none;
   color: white;
-  padding: 15px 80px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   text-transform: uppercase;
-  font-size: 13px;
+  font-size: 16px;
   width: 85%;
   -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
   box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
@@ -245,9 +249,7 @@ input[type="reset"] {
   transition: all 0.3s ease-in-out;
 }
 
-input[type="button"]:hover,
-input[type="submit"]:hover,
-input[type="reset"]:hover {
+.fourth:hover {
   background-color: #39ace7;
 }
 

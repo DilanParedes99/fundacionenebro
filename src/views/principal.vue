@@ -44,6 +44,7 @@
 <script>
 // @ is an alias to /src
 import axios from 'axios'; 
+import { Config } from "../../Config";
 
 export default {
   name: 'Principal',
@@ -63,7 +64,7 @@ export default {
     }
   },
   mounted () {
-    axios.post('https://fundacionenebro.org.mx/monitorapi/monitor/api/cliente/infocte')
+    axios.post(Config.url+'/api/cliente/infocte')
     .then(response =>{
       if(response.data.status === 1){
           this.direccion = response.data.cliente[0].info_direccion
@@ -131,7 +132,7 @@ h2 {
   width: 100%;
   min-height: 100%;
   padding: 20px;
-  transform: translateY(30%);
+  transform: translateY(10%);
 }
 
 #formContent {

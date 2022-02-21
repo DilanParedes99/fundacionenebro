@@ -7,10 +7,7 @@
         <h3><b>No.Serie</b></h3>
         <h5 class="titulo">{{ info.Serie2 }}</h5> <br>
         <br />
-        <h5><b>Teléfono / Chip :</b>&nbsp;</h5> <br>
-        <h5>
-          <i class="fas fa-mobile-alt ml-1 mr-1"></i>&nbsp;{{ info.Chip }}
-        </h5> <br>
+        <h5><b>Chip :</b>&nbsp; <i class="fas fa-mobile-alt ml-1 mr-1"></i>&nbsp;{{ info.Chip }}</h5> <br><br>
         <h5><b>Batería</b> <i class="fas fa-battery-full ml-1 mr-1"></i>{{ info.Bat }}%</h5>
       </div>
     </div>
@@ -61,7 +58,8 @@
       <div class="row">
         <div class="col"></div>
         <div class="col">
-          <img src="@/images/regresar.png" id="icon_sm" @click="consumo()" />
+          <router-link :to="{ name: 'Editar', params: { id: id } }" ><img src="@/images/regresar.png" id="icon_sm"  /> </router-link>
+          
           <br />
           <h2 @click="consumo()">regresar</h2>
         </div>
@@ -75,13 +73,13 @@
 import axios from "axios";
 import ApexCharts from "apexcharts";
 import moment from "moment";
-
+import { Config } from "../../Config";
 export default {
   name: "Medidores",
   components: {},
   data() {
     return {
-      id: this.$route.params.id,
+      id: Number(this.$route.params.id),
       datos: null,
       fechaInicio: null,
       fechaFin: null,
@@ -96,9 +94,9 @@ export default {
       this.fechas = [];
       axios
         .post(
-          "https://fundacionenebro.org.mx/monitorapi/monitor/api/medidor/graficar/gas",
+          Config.url+"/api/medidor/graficar/gas",
           {
-            id_medidor: this.id,
+            id_medidor: Number(this.id),
             fecha_inicio: this.fechaInicio,
             fecha_fin: this.fechaFin,
           }
@@ -121,7 +119,7 @@ export default {
           toolbar: {
             show: true,
             tools: {
-              download: false,
+              download: true,
               selection: false,
               zoom: true,
               zoomin: true,
@@ -129,6 +127,24 @@ export default {
               pan: false,
               reset: false,
             },
+            export: {
+              csv: {
+                filename: 'reporte',
+                columnDelimiter: ",",
+                headerCategory: "fecha",
+                headerValue: "value",
+                dateFormatter(timestamp) {
+                  return new Date(timestamp).toDateString();
+                },
+              },
+              svg: {
+                filename: 'reporte',
+              },
+              png: {
+                filename: 'reporte',
+              },
+            },
+            autoSelected: "zoom",
           },
         },
         series: [
@@ -187,8 +203,8 @@ export default {
     console.log(this.id);
     axios
       .post(
-        "https://fundacionenebro.org.mx/monitorapi/monitor/api/medidor/info",
-        { id_medidor: this.id }
+        Config.url+"/api/medidor/info",
+        { id_medidor: Number(this.id) }
       )
       .then((response) => {
         this.info = response.data.medidor.info_Actual;
@@ -282,7 +298,7 @@ h6 {
   border-radius: 0 0 10px 10px;
 }
 #icon_sm {
-  width: 20%;
+  max-width: 16%  !important;
   margin-bottom: -20px;
 }
 

@@ -3,8 +3,9 @@
 </template>
 
 <script>
-  import VFacebookLogin from 'vue-facebook-login-component'
-  import axios from 'axios'
+  import VFacebookLogin from 'vue-facebook-login-component';
+  import axios from 'axios';
+  import { Config } from "../../Config";
   export default {
     components: {
       VFacebookLogin,
@@ -33,7 +34,7 @@
             this.login_social.id_user = response.authResponse.userID;
             this.login_social.access_token = response.authResponse.accessToken;
 
-            axios.post('https://fundacionenebro.org.mx/monitorapi/monitor/api/cliente/loginfb',{id_user:this.login_social.id_user,access_token:this.login_social.access_token})
+            axios.post(Config.url+'/api/cliente/loginfb',{id_user:this.login_social.id_user,access_token:this.login_social.access_token})
             .then(response=>{
               if(response.status ===200){
                 localStorage.token = response.data.token;

@@ -19,7 +19,7 @@
                       <h5><b>Fecha de la ultima lectura:</b> {{info.Timestamp | moment("L")}}</h5>
                     </div>
                     <div class="row">
-                      <h5><b>Teléfono / Chip :</b>&nbsp;</h5> <h5 style="margin-left:10%"><i class="fas fa-mobile-alt"></i>&nbsp;{{datos.chip}}</h5>
+                      <h5><b>Chip :</b>&nbsp;</h5> <h5 style="margin-left:10%"><i class="fas fa-mobile-alt"></i>&nbsp;{{datos.chip}}</h5>
                     </div>
                     <div class="row"  v-if="info !== undefined && info !== null">
                       <h5><b>Batería</b></h5> <h5><i class="fas fa-battery-full mr-1 ml-2 "></i> {{info.Bat}}%</h5>
@@ -124,7 +124,7 @@
                             <h2 class="btn" @click="guardar()">Guardar</h2>
                         </div>
                         <div class="col">
-                            <router-link to="/consumo"> <img src="@/images/consumo.png" id="icon_sm" @click="consumo(id)"> </router-link> <br>
+                            <router-link :to="{name:'Consumo',params:{id:id}}"> <img src="@/images/consumo.png" id="icon_sm"> </router-link> <br>
                             <h2 @click="consumo(id)" >Consumo</h2>
                         </div>
                         <div class="col">
@@ -143,6 +143,7 @@
 <script>
 import axios from 'axios'
 import ApexCharts from 'apexcharts'
+import {Config} from '../../Config'; 
 
 export default {
   name: 'Medidores',
@@ -189,7 +190,7 @@ export default {
     guardar(){
       if(this.f_fabricacion != null){
         this.f_fabricacion = this.f_fabricacion + " " + this.hora + ":00"
-        axios.post('https://fundacionenebro.org.mx/monitorapi/monitor/api/medidor/edit/fabricacion',
+        axios.post(Config.url+'/api/medidor/edit/fabricacion',
           {id_medidor:this.id,fabricacion:this.f_fabricacion})
           .then(response =>{
               response;
@@ -203,7 +204,7 @@ export default {
           this.id_uso=2
         }
 
-        axios.post('https://fundacionenebro.org.mx/monitorapi/monitor/api/medidor/edit/tipouso',
+        axios.post(Config.url+'/api/medidor/edit/tipouso',
           {id_medidor:this.id,id_uso:this.id_uso})
           .then(response =>{
               response;
@@ -211,7 +212,7 @@ export default {
 
       }
 
-      axios.post('https://fundacionenebro.org.mx/monitorapi/monitor/api/medidor/edit/direccion',
+      axios.post(Config.url+'/api/medidor/edit/direccion',
           {id_medidor:this.id,calle:this.direccion.calle,colonia:this.direccion.colonia,cp:this.direccion.cp,ciudad:this.direccion.ciudad, municipio:this.direccion.municipio,delegacion:this.direccion.delegacion,estado:this.direccion.estado}
           )
           .then(response =>{
@@ -223,7 +224,7 @@ export default {
            
   mounted(){
     console.log(this.id)
-    axios.post('https://fundacionenebro.org.mx/monitorapi/monitor/api/medidor/info',{id_medidor:this.id})
+    axios.post(Config.url+'/api/medidor/info',{id_medidor:Number(this.id)})
     .then(response =>{
         this.datos = response.data.medidor
         this.info = response.data.medidor.info_Actual
@@ -233,7 +234,7 @@ export default {
         
     })
 
-    axios.get('https://fundacionenebro.org.mx/monitorapi/monitor/api/medidor/info/usos')
+    axios.get(Config.url+'/api/medidor/info/usos')
       .then(response=>{
         this.listausos=response.data.listausos
       })

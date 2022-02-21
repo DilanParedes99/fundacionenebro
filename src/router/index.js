@@ -73,13 +73,13 @@ const routes = [
     meta: { requiresAuth: true},
   },
   {
-    path: '/consumo',
+    path: '/consumo/:id',
     name: 'Consumo',
     component: () => import (/* webpackChunkName: "about" */ '../views/consumo.vue'),
     meta: { requiresAuth: true},
   },
   {
-    path: '/editar',
+    path: '/editar/:id',
     name: 'Editar',
     component: () => import (/* webpackChunkName: "about" */ '../views/editar.vue'),
     meta: { requiresAuth: true},
@@ -105,7 +105,7 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
-  base: '/controlgas/',
+  base: '/monitorweb/',
   routes
 })
 

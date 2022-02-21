@@ -1,11 +1,13 @@
 <template>
-  <div class="home">
-    <div class="wrapper">
-      <div id="formContent">
-        <div class="first">
+  <div class="container">
+    <div class="row">
+       <div class="offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-2 col-lg-8 first mt-5 mb-2">
           <h3>Create an Account</h3>
           <br /><br /><br />
         </div>
+    </div>
+    <div class="row">
+      <div class="offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-2 col-lg-8">
 
         <!-- Login Form -->
         <form v-on:submit.prevent="registro">
@@ -71,7 +73,7 @@
               <br />
             </div>
           </div>
-          <input type="submit" class="fourth" value="Sign Up" />
+          <button type="submit" class="fourth" ><p class="mt-2 mb-2">Sign Up</p></button>
           <h5>
             By signing up, you agree with the
             <a href="#" id="forgot_pswd">Terms of Service</a> and
@@ -93,6 +95,7 @@
 // @ is an alias to /src
 import axios from "axios";
 import swal from "sweetalert";
+import { Config } from "../../Config";
 export default {
   name: "CreateAccount",
   components: {},
@@ -110,7 +113,7 @@ export default {
   methods: {
     registro() {
       axios
-        .post("https://fundacionenebro.org.mx/monitorapi/monitor/api/cliente", {
+        .post(Config.url+"/api/cliente", {
           nombre: this.nombre,
           apellido_paterno: this.apellido_paterno,
           apellido_materno: this.apellido_materno,
@@ -254,18 +257,15 @@ h2.active {
 
 /* FORM TYPOGRAPHY*/
 
-input[type="button"],
-input[type="submit"],
-input[type="reset"] {
+.fourth {
   background-color: #e01a1a;
   border: none;
   color: white;
-  padding: 15px 80px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   text-transform: uppercase;
-  font-size: 13px;
+  font-size: 16px;
   width: 85%;
   -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
   box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
@@ -279,9 +279,7 @@ input[type="reset"] {
   transition: all 0.3s ease-in-out;
 }
 
-input[type="button"]:hover,
-input[type="submit"]:hover,
-input[type="reset"]:hover {
+.fourth:hover {
   background-color: #ff5252;
 }
 
