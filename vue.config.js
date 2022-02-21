@@ -4,6 +4,6 @@ module.exports = {
       ? '/controlgas/'
       : '/controlgas/',
     devServer: { 
-        proxy: 'https://fundacionenebro.org.mx/monitorapi/monitor/api', 
+        proxy: process.env.VUE_APP_URL_API, 
     }
 }

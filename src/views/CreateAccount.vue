@@ -93,6 +93,7 @@
 // @ is an alias to /src
 import axios from "axios";
 import swal from "sweetalert";
+import { Config } from "../../Config";
 export default {
   name: "CreateAccount",
   components: {},
@@ -110,7 +111,7 @@ export default {
   methods: {
     registro() {
       axios
-        .post("https://fundacionenebro.org.mx/monitorapi/monitor/api/cliente", {
+        .post(Config.url+"/api/cliente", {
           nombre: this.nombre,
           apellido_paterno: this.apellido_paterno,
           apellido_materno: this.apellido_materno,

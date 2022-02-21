@@ -40,6 +40,7 @@
 <script>
 // @ is an alias to /src
 import axios from 'axios';
+import { Config } from "../../Config";
 
 export default {
   name: 'Medidores',
@@ -57,7 +58,7 @@ export default {
     }
         },     
   mounted(){
-      axios.get('https://fundacionenebro.org.mx/monitorapi/monitor/api/medidor/cliente/autenticado')
+      axios.get(Config.url+'/api/medidor/cliente/autenticado')
       .then(response =>{
         this.datos = response.data.listamedidor;
       })

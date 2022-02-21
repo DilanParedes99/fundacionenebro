@@ -65,6 +65,7 @@
 import axios from "axios";
 import VFacebookLogin from "@/components/VFacebookLogin.vue";
 import swal from "sweetalert";
+import { Config } from "../../Config";
 export default {
   name: "SignEmail",
   components: {
@@ -81,7 +82,7 @@ export default {
     login() {
       axios
         .post(
-          "https://fundacionenebro.org.mx/monitorapi/monitor/api/cliente/login",
+          Config.url+"/api/cliente/login",
           { email: this.email, password: this.password }
         )
         .then((response) => {

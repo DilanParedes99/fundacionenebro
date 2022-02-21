@@ -5,13 +5,15 @@
         <h1 class="titulo">Medidores</h1>
         <br />
         <h3><b>No.Serie</b></h3>
-        <h5 class="titulo">{{ info.Serie2 }}</h5> <br>
+        <h5 class="titulo">{{ info.Serie2 }}</h5>
         <br />
-        <h5><b>Teléfono / Chip :</b>&nbsp;</h5> <br>
+        <br />
+        <h5><b>Chip :</b>&nbsp; <i class="fas fa-mobile-alt ml-1 mr-1"></i>&nbsp;{{ info.Chip }}</h5>
+        <br />
         <h5>
-          <i class="fas fa-mobile-alt ml-1 mr-1"></i>&nbsp;{{ info.Chip }}
-        </h5> <br>
-        <h5><b>Batería</b> <i class="fas fa-battery-full ml-1 mr-1"></i>{{ info.Bat }}%</h5>
+          <b>Batería</b> <i class="fas fa-battery-full ml-1 mr-1"></i
+          >{{ info.Bat }}%
+        </h5>
       </div>
     </div>
 
@@ -44,7 +46,7 @@
       </div>
     </div>
     <div class="row">
-      <div class=" offset-md-2 col-md-8 col-sm-12">
+      <div class="offset-md-2 col-md-8 col-sm-12">
         <button class="btn social-btn" @click="graficar">
           &nbsp;Mostrar grafica</button
         ><br /><br />
@@ -75,6 +77,7 @@
 import axios from "axios";
 import ApexCharts from "apexcharts";
 import moment from "moment";
+import { Config } from "../../Config";
 
 export default {
   name: "Medidores",
@@ -96,7 +99,7 @@ export default {
       this.fechas = [];
       axios
         .post(
-          "https://fundacionenebro.org.mx/monitorapi/monitor/api/medidor/graficar/gas",
+          Config.url+"/api/medidor/graficar/gas",
           {
             id_medidor: this.id,
             fecha_inicio: this.fechaInicio,
@@ -129,6 +132,24 @@ export default {
               pan: false,
               reset: false,
             },
+            /*export: {
+              csv: {
+                filename: 'reporte',
+                columnDelimiter: ",",
+                headerCategory: "fecha",
+                headerValue: "value",
+                dateFormatter(timestamp) {
+                  return new Date(timestamp).toDateString();
+                },
+              },
+              svg: {
+                filename: 'reporte',
+              },
+              png: {
+                filename: 'reporte',
+              },
+            },
+            autoSelected: "zoom",*/
           },
         },
         series: [
@@ -187,7 +208,7 @@ export default {
     console.log(this.id);
     axios
       .post(
-        "https://fundacionenebro.org.mx/monitorapi/monitor/api/medidor/info",
+        Config.url+"/api/medidor/info",
         { id_medidor: this.id }
       )
       .then((response) => {
@@ -199,13 +220,12 @@ export default {
 
 
 <style scoped>
-
-.text-rigth{
+.text-rigth {
   text-align: left;
 }
 
-.titulo{
-  text-align: center  !important;
+.titulo {
+  text-align: center !important;
 }
 /* BASIC */
 

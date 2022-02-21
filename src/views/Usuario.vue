@@ -103,9 +103,11 @@
         </div>
         <!-- Ventana oculta hasta que el usuario hace click en modificar email-->
         <form v-if="ventana_correo" id="form_password">
-          <h5>Nuevo correo:</h5>
+           <div class="form-group">
+            <h5>Nuevo correo:</h5>
           <div class="row">
-            <input
+            <div class="col-12">
+              <input
               type="email"
               class="second"
               name="email"
@@ -113,6 +115,7 @@
               required
               v-model="email"
             />
+            </div>
           </div>
           <div class="row">
             <div class="col">
@@ -135,13 +138,16 @@
               </button>
             </div>
           </div>
+          </div>
         </form>
 
         <!-- Ventana oculta hasta que el usuario hace click en modificar telefono-->
         <form v-if="ventana_telefono" id="form_password">
-          <h5>Telefono:</h5>
+         <div class="form-group">
+            <h5>Telefono:</h5>
           <div class="row">
-            <input
+            <div class="col-12">
+              <input
               type="number"
               class="second"
               name="Contraseña"
@@ -149,6 +155,7 @@
               required
               v-model="telefono"
             />
+            </div>
           </div>
           <div class="row">
             <div class="col">
@@ -170,6 +177,7 @@
                 Guardar
               </button>
             </div>
+          </div>
           </div>
         </form>
 
@@ -344,6 +352,7 @@
 // @ is an alias to /src
 import axios from "axios";
 import swal from "sweetalert";
+import { Config } from "../../Config";
 
 export default {
   name: "Usuario",
@@ -368,7 +377,7 @@ export default {
       if (this.email != null && this.email.includes("@") && this.email.includes(".")) {
         axios
           .post(
-            "https://fundacionenebro.org.mx/monitorapi/monitor/api/cliente/edit/email",
+            Config.url+"/api/cliente/edit/email",
             { email: this.email }
           )
           .then((response) => {
@@ -390,7 +399,7 @@ export default {
       if (this.telefono != null) {
         axios
           .post(
-            "https://fundacionenebro.org.mx/monitorapi/monitor/api/cliente/edit/telefono",
+            Config.url+"/api/cliente/edit/telefono",
             { telefono: this.telefono }
           )
           .then((response) => {
@@ -404,7 +413,7 @@ export default {
       if (this.contraseña != null) {
         axios
           .post(
-            "https://fundacionenebro.org.mx/monitorapi/monitor/api/cliente/edit/pass",
+            Config.url+"/api/cliente/edit/pass",
             { password: this.contraseña }
           )
           .then((response) => {
@@ -416,7 +425,7 @@ export default {
     modificar() {
       axios
         .post(
-          "https://fundacionenebro.org.mx/monitorapi/monitor/api/direccion/cliente/edit",
+          Config.url+"/api/direccion/cliente/edit",
           {
             calle: this.direccion.calle,
             colonia: this.direccion.colonia,
@@ -445,7 +454,7 @@ export default {
     inicio() {
       axios
         .post(
-          "https://fundacionenebro.org.mx/monitorapi/monitor/api/cliente/infocte"
+          Config.url+"/api/cliente/infocte"
         )
         .then((response) => {
           if (response.data.status === 1) {

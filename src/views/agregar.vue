@@ -88,6 +88,7 @@
 // @ is an alias to /src
 import axios from 'axios';
 import swal from "sweetalert";
+import { Config } from "../../Config";
 export default {
   name: 'Medidores',
   components: {
@@ -117,7 +118,7 @@ export default {
       
       this.f_fabricacion = this.f_fabricacion + " " + this.hora + ":00";
 
-      axios.post('https://fundacionenebro.org.mx/monitorapi/monitor/api/medidor/',
+      axios.post(Config.url+'/api/medidor/',
       {numserie:this.numserie,id_uso:this.id_uso,f_fabricacion:this.f_fabricacion, calle:this.calle, 
       colonia:this.colonia, cp:this.cp, ciudad:this.ciudad, municipio:this.municipio, delegacion:this.delegacion, estado:this.estado})
       .then(response =>{
@@ -139,7 +140,7 @@ export default {
     }
   },
   mounted(){
-      axios.get('https://fundacionenebro.org.mx/monitorapi/monitor/api/medidor/info/usos')
+      axios.get(Config.url+'/api/medidor/info/usos')
       .then(response=>{
         this.listausos=response.data.listausos
       })
